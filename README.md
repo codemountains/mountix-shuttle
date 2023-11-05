@@ -5,7 +5,7 @@
 
 ## Migrated to Shuttle
 
-This project was migrated to [Shuttle](https://www.shuttle.rs/).
+This project is a migration of [codemountains/mountix](https://github.com/codemountains/mountix) to [Shuttle](https://www.shuttle.rs/).
 
 ## Getting Started
 
