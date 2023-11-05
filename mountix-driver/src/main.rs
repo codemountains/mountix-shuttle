@@ -1,3 +1,4 @@
+use mongodb::Database;
 use mountix_driver::module::Modules;
 use mountix_driver::startup::startup;
 use shuttle_secrets::SecretStore;
@@ -7,14 +8,11 @@ use tracing::info;
 #[shuttle_runtime::main]
 pub async fn axum(
     #[shuttle_secrets::Secrets] secret_store: SecretStore,
+    #[shuttle_shared_db::MongoDb] db: Database,
 ) -> shuttle_axum::ShuttleAxum {
-    let db_url = secret_store
-        .get("DATABASE_URL")
-        .expect("DATABASE_URL is undefined.");
-
     let _ = write_env(&secret_store);
 
-    let modules = Modules::new(&db_url).await;
+    let modules = Modules::new(db).await;
     let router = startup(Arc::new(modules)).await;
 
     Ok(router.into())

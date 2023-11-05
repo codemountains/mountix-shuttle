@@ -1,3 +1,4 @@
+use mongodb::Database;
 use mountix_adapter::modules::{RepositoriesModule, RepositoriesModuleExt};
 use mountix_adapter::persistence::mongodb::Db;
 use mountix_adapter::repository::health_check::HealthCheckRepository;
@@ -41,8 +42,8 @@ impl ModulesExt for Modules {
 }
 
 impl Modules {
-    pub async fn new(db_url: &str) -> Modules {
-        let db = Db::new(db_url).await;
+    pub async fn new(db: Database) -> Modules {
+        let db = Db::new(db).await;
 
         let repositories_module = Arc::new(RepositoriesModule::new(db.clone()));
 
