@@ -9,30 +9,6 @@ This project is a migration of [codemountains/mountix](https://github.com/codemo
 
 ## Getting Started
 
-### DB initialization
-
-データベースは [MongoDB Atlas Database](https://www.mongodb.com/ja-jp/atlas/database) を使用します。
-
-事前にプロジェクト、クラスター、データベースを作成し [Connection string](https://www.mongodb.com/docs/manual/reference/connection-string/) を取得する必要があります。
-
-Examples:
-
-- Project Name: `mountix`
-- Cluster Name: `Mountix-Cluster0`
-- Database Name: `mountix_db`
-
-```shell
-cd ./migrations/
-./migrate.sh
-cd ../
-```
-
-Note:
-
-- macOS Monterey version 12.5 でのみ動作確認済みです。
-- `mongoimport`については [MongoDB Database Tools 公式ドキュメント](https://www.mongodb.com/docs/database-tools/)を確認してください。
-- MongoDB Atlas 上に構築したデータベースに Shuttle から接続する場合、`0.0.0.0/0` をホワイトリストに追加する必要があります。
-
 ### Add Local secrets
 
 Add `Secrets.dev.toml` to the root.
