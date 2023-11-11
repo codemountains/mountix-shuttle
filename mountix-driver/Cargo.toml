@@ -19,4 +19,3 @@ shuttle-secrets = "0.31.0"
 tracing = "0.1.35"
 tracing-subscriber = { version = "0.3.15", features = ["env-filter"] }
 shuttle-shared-db = { version = "0.31.0", features = ["mongodb"] }
-mongodb = "2.3.0"
