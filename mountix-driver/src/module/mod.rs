@@ -1,5 +1,5 @@
-use mongodb::Database;
 use mountix_adapter::modules::{RepositoriesModule, RepositoriesModuleExt};
+use mountix_adapter::mongodb::Database;
 use mountix_adapter::persistence::mongodb::Db;
 use mountix_adapter::repository::health_check::HealthCheckRepository;
 use mountix_app::usecase::health_check::HealthCheckUseCase;

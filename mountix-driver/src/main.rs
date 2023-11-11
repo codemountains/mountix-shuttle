@@ -1,4 +1,4 @@
-use mongodb::Database;
+use mountix_adapter::mongodb::Database;
 use mountix_driver::module::Modules;
 use mountix_driver::startup::startup;
 use shuttle_secrets::SecretStore;
