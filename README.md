@@ -24,6 +24,12 @@ DEFAULT_DISTANCE = '5000'
 MAX_DISTANCE = '100000'
 ```
 
+### Install Shuttle
+
+```shell
+cargo install cargo-shuttle
+```
+
 ### Run the web application
 
 ```shell
