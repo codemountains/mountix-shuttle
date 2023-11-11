@@ -34,7 +34,7 @@ cargo shuttle run
 
 ```shell
 cargo shuttle project start
-cargo shuttle project deploy
+cargo shuttle deploy
 ```
 
 ## Architecture
