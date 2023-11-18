@@ -38,6 +38,19 @@ cargo shuttle run
 
 ### Deploy to Shuttle
 
+Add `Secrets.toml` to the root.
+
+```toml
+RUST_LOG = 'info'
+
+MY_API_KEY = 'the contents of my API key'
+
+MOUNTAINS_URL = 'http://127.0.0.1:8080/api/v1/mountains'
+DOCUMENTS_URL = 'https://github.com/codemountains/mountix-docs'
+DEFAULT_DISTANCE = '5000'
+MAX_DISTANCE = '100000'
+```
+
 ```shell
 cargo shuttle project start
 cargo shuttle deploy
