@@ -1,8 +1,9 @@
 use std::sync::Arc;
 
 use crate::model::mountain::MountainDocument;
-use crate::persistence::{init_data_1, init_data_2, init_data_3, init_data_4};
-use mongodb::Database;
+use mongodb::bson::doc;
+use mongodb::{Database, IndexModel};
+use serde::{Deserialize, Serialize};
 
 #[derive(Clone)]
 pub struct Db(pub(crate) Arc<Database>);
@@ -16,6 +17,13 @@ impl Db {
     }
 }
 
+const MOUNTAINS_JSON: &'static [u8] = include_bytes!("../data/mountains.json");
+
+#[derive(Debug, Deserialize, Serialize)]
+pub struct InitialData {
+    mountains: Vec<MountainDocument>,
+}
+
 async fn init(db: Database) {
     let count = db
         .collection::<MountainDocument>("mountains")
@@ -27,24 +35,23 @@ async fn init(db: Database) {
         return;
     }
 
-    // MEMO: To prevent overflow, `mountains` was divided
-    //
-    // ```
-    // thread 'tokio-runtime-worker' has overflowed its stack
-    // fatal runtime error: stack overflow
-    // ```
-    for idx in 1..=4 {
-        let mountains = match idx {
-            1 => init_data_1(),
-            2 => init_data_2(),
-            3 => init_data_3(),
-            _ => init_data_4(),
-        };
+    // Initialization
+    let initial_data: InitialData =
+        serde_json::from_slice(MOUNTAINS_JSON).expect("Failed to read mountains data.");
+    let _ = db
+        .collection::<MountainDocument>("mountains")
+        .insert_many(initial_data.mountains, None)
+        .await
+        .expect("Failed to insert initial data.");
 
-        let _ = db
-            .collection("mountains")
-            .insert_many(mountains, None)
-            .await
-            .expect("Failed to insert initial data.");
-    }
+    // Create a 2dsphere Index
+    // https://www.mongodb.com/docs/manual/core/indexes/index-types/geospatial/2dsphere/create/
+    let geo_index = IndexModel::builder()
+        .keys(doc! {"location": "2dsphere"})
+        .build();
+    let _ = db
+        .collection::<MountainDocument>("mountains")
+        .create_index(geo_index, None)
+        .await
+        .expect("Failed to create a 2dsphere index.");
 }
