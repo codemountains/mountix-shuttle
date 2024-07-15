@@ -13,9 +13,8 @@ tokio = { version = "1.20.0", features = ["full"] }
 serde = { version = "1.0", features = ["derive"] }
 tower = "0.4.13"
 tower-http = { version = "0.3.4", features = ["cors"] }
-shuttle-runtime = "0.32.0"
-shuttle-axum = "0.32.0"
-shuttle-secrets = "0.32.0"
-shuttle-shared-db = { version = "0.32.0", features = ["mongodb"] }
+shuttle-runtime = "0.46.0"
+shuttle-axum = { version = "0.46.0", default-features = false, features = ["axum-0-6"] }
+shuttle-shared-db = { version = "0.46.0", features = ["mongodb"] }
 tracing = "0.1.35"
 tracing-subscriber = { version = "0.3.15", features = ["env-filter"] }

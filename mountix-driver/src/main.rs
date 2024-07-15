@@ -1,13 +1,13 @@
 use mountix_adapter::mongodb::Database;
 use mountix_driver::module::Modules;
 use mountix_driver::startup::startup;
-use shuttle_secrets::SecretStore;
+use shuttle_runtime::SecretStore;
 use std::sync::Arc;
 use tracing::info;
 
 #[shuttle_runtime::main]
 pub async fn axum(
-    #[shuttle_secrets::Secrets] secret_store: SecretStore,
+    #[shuttle_runtime::Secrets] secret_store: SecretStore,
     #[shuttle_shared_db::MongoDb] db: Database,
 ) -> shuttle_axum::ShuttleAxum {
     let _ = write_env(&secret_store);
